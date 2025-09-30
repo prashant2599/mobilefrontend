@@ -21,11 +21,6 @@ jobs:
       - name: Install EAS CLI
         run: npm install -g eas-cli
 
-      - name: Authenticate with EAS
-        run: eas whoami || eas login --token $EAS_TOKEN
-        env:
-          EAS_TOKEN: ${{ secrets.EAS_TOKEN }}
-
       - name: Configure EAS
         run: eas build:configure
 
@@ -37,5 +32,5 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: android-apk
-          path: dist/*.apk
+          name: android-build
+          path: dist/**
