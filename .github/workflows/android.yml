@@ -21,9 +21,7 @@ jobs:
       - name: Install EAS CLI
         run: npm install -g eas-cli
 
-      - name: Configure EAS
-        run: eas build:configure
-
+      # ⚠️ Removed `eas build:configure`
       - name: Build Android APK with EAS
         run: eas build --platform android --non-interactive --profile preview
         env:
