@@ -5,9 +5,18 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "sdkVersion": "50.0.0",
-    "platforms": ["android"],
+    "platforms": [
+      "android"
+    ],
     "android": {
-      "package": "com.test.prashantapp"
-    }
+      "package": "com.test.prashantapp",
+      "versionCode": 1
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b187e887-7e3a-468b-8525-a65bfb9998c5"
+      }
+    },
+    "owner": "prashant2599"
   }
 }
