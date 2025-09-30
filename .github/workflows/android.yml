@@ -8,26 +8,43 @@ jobs:
   build-android:
     runs-on: ubuntu-latest
     steps:
+      # Checkout code
       - uses: actions/checkout@v4
 
+      # Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
 
+      # Install dependencies
       - name: Install dependencies
         run: npm install
 
+      # Install EAS CLI
       - name: Install EAS CLI
         run: npm install -g eas-cli
 
-      - name: Build Android APK with EAS
-        run: eas build --platform android --non-interactive --profile preview
+      # Build Android APK with EAS
+      - name: Build Android APK
+        run: eas build --platform android --profile preview --non-interactive
         env:
-          EXPO_TOKEN: ${{ secrets.EAS_TOKEN }}  
+          EXPO_TOKEN: ${{ secrets.EAS_TOKEN }}
 
-      - name: Upload Artifact
+      # Get latest finished build URL
+      - name: Get build URL
+        id: build
+        run: |
+          BUILD_URL=$(eas build:list --status finished --platform android --limit 1 --non-interactive --json | jq -r '.[0].artifacts.buildUrl')
+          echo "BUILD_URL=$BUILD_URL" >> $GITHUB_ENV
+
+      # Download APK from Expo
+      - name: Download APK
+        run: curl -L "$BUILD_URL" -o app-preview.apk
+
+      # Upload APK to GitHub Actions artifacts
+      - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: android-build
-          path: dist/**
+          name: android-apk
+          path: app-preview.apk
