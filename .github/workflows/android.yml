@@ -21,11 +21,10 @@ jobs:
       - name: Install EAS CLI
         run: npm install -g eas-cli
 
-      # ⚠️ Removed `eas build:configure`
       - name: Build Android APK with EAS
         run: eas build --platform android --non-interactive --profile preview
         env:
-          EAS_TOKEN: ${{ secrets.EAS_TOKEN }}
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}   # ✅ use EXPO_TOKEN
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
