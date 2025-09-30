@@ -1,9 +1,13 @@
 {
   "expo": {
-    "extra": {
-      "eas": {
-        "projectId": "c419997f-f166-46a2-b71a-78dd2c2d1523"
-      }
+    "name": "MyApp",
+    "slug": "myapp",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "sdkVersion": "50.0.0",
+    "platforms": ["android"],
+    "android": {
+      "package": "com.test.prashantapp"
     }
   }
 }
