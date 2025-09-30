@@ -18,13 +18,24 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build Android APK
-        run: |
-          cd android
-          ./gradlew assembleRelease
+      - name: Install EAS CLI
+        run: npm install -g eas-cli
+
+      - name: Authenticate with EAS
+        run: eas whoami || eas login --token $EAS_TOKEN
+        env:
+          EAS_TOKEN: ${{ secrets.EAS_TOKEN }}
+
+      - name: Configure EAS
+        run: eas build:configure
+
+      - name: Build Android APK with EAS
+        run: eas build --platform android --non-interactive --profile preview
+        env:
+          EAS_TOKEN: ${{ secrets.EAS_TOKEN }}
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: android-apk
-          path: android/app/build/outputs/apk/release/app-release.apk
+          path: dist/*.apk
